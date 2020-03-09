@@ -852,6 +852,9 @@ MonoBehaviour:
   noFrictionMat: {fileID: 13400000, guid: b3f9e9b63653e6143a6a7008a544e857, type: 2}
   highFrictionMat: {fileID: 13400000, guid: ada4c78adf98c544891ae8ca57b1cbe7, type: 2}
   playerMesh: {fileID: 2998898232687586741}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 1
   overrideNormalMovement: 0
   overrideJump: 0
   overrideRotation: 0
@@ -904,9 +907,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
-  m_Height: 0.97
+  m_Height: 0.9
   m_Direction: 1
-  m_Center: {x: 0, y: 0.484, z: 0}
+  m_Center: {x: 0, y: 0.449893, z: 0}
 --- !u!1 &2998898232687586740
 GameObject:
   m_ObjectHideFlags: 0

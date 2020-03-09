@@ -38,6 +38,9 @@ public class SCR_PlayerMovement : MonoBehaviour
     #endregion
 
     #region Public variables
+    [Tooltip("Layer mask used for ground detection")]
+    public LayerMask groundMask;
+    [Header("Runtime variables")]
     public bool overrideNormalMovement = false;
     public bool overrideJump = false;
     public bool overrideRotation = false;
@@ -390,13 +393,7 @@ public class SCR_PlayerMovement : MonoBehaviour
     /// </summary>
     void GroundDetect()
     {
-        // This bit only runs if player has been in the air for > 1 frame
-        if (offGroundTime > 0)
-        {
-            // Give player frictionless physic material in air
-            movementColl.material = noFrictionMat;
-        }
-        else if (!touchingGround)
+        if (!touchingGround && offGroundTime <= 0)
         {
             // Run "leaving ground" function on first frame of not touching ground
             OnLeavingGround();
@@ -413,8 +410,11 @@ public class SCR_PlayerMovement : MonoBehaviour
 
         // Set bonkedOnCeiling to false. This is used to check if a jump should be canceled because player hit something.
         bonkedOnCeiling = false;
-    }
 
+        // Check if player should be snapped down to ground
+        if (offGroundTime <= 0 && !overrideGroundDetect)
+            StartCoroutine(SnapToGround());
+    }
 
     /// <summary>
     /// This function runs each time player lands on ground after being in the air.
@@ -441,11 +441,35 @@ public class SCR_PlayerMovement : MonoBehaviour
 
         // [expand this to add velocity when leaving moving platforms]
 
-        // count times player has left ground (just for debug)
-        timesLeftGround++;
-        //print("Times left ground: " + timesLeftGround);
     }
-    int timesLeftGround = 0;
+
+    /// <summary>
+    /// This function runs after OnCollisionStay has checked for ground collision.
+    /// If collision didn't find ground, this checks if player is still *almost* touching ground.
+    /// If yes, it snaps player down to ground.
+    /// This makes movement on irregular and convex surfaces much more stable.
+    /// </summary>
+    IEnumerator SnapToGround()
+    {
+        // Delay raycast until after OnCollisionStay has run
+        yield return new WaitForFixedUpdate();
+
+        Vector3 rayDirection = Vector3.Lerp(-groundNormal, Vector3.down, 0.5f);
+
+        if (!touchingGround 
+            && Physics.Raycast(transform.position, rayDirection, out RaycastHit groundHit, variables.groundSnapDistance, groundMask, QueryTriggerInteraction.Ignore))
+        {
+            float contactAngle = Vector3.Angle(Vector3.up, groundHit.normal);
+
+            if (contactAngle < variables.maxGroundAngle)
+            {
+                Debug.DrawLine(transform.position, groundHit.point, Color.red, 10);
+
+                transform.position = groundHit.point;
+                touchingGround = true;
+            }
+        }
+    }
 
     /// <summary>
     ///  OnCollisionStay is used for ground detection.
@@ -466,9 +490,23 @@ public class SCR_PlayerMovement : MonoBehaviour
 
                 touchingGround = true;
                 offGroundTime = 0;
-                groundNormal = contact.normal;
                 jumping = false;
                 canMidairJump = true;
+
+                // Setting ground normal based on collision alone is too inaccurate and causes a lot of jitter.
+                // To combat this, we use 4 additional raycasts with slightly different offsets, and use the average of their normals.
+                Vector3[] offsets = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
+                Vector3 averageNormal = contact.normal;
+
+                foreach (var offset in offsets)
+                {
+                    if (Physics.Raycast(transform.position + (offset * 0.01f), Vector3.down, out RaycastHit groundHit, variables.groundSnapDistance, groundMask, QueryTriggerInteraction.Ignore))
+                    {
+                        averageNormal += groundHit.normal;
+                    }
+
+                }
+                groundNormal = averageNormal.normalized;
             }
         }
     }

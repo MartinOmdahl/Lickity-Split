@@ -25,6 +25,7 @@ MonoBehaviour:
   airControlPercent: 0.6
   terminalVelocity: 10
   gravityForce: 30
+  groundSnapDistance: 0.1
   maxGroundAngle: 47.5
   maxHeadBonkAngle: 35
   maxTargetDistance: 5

@@ -29,6 +29,9 @@ public class SCR_Variables : ScriptableObject
     [Tooltip("Highest possible fall velocity")]
     public float terminalVelocity = 20;
     public float gravityForce = 30;
+    [Tooltip("Max distance from which player can snap to ground while walking.\n" +
+        "Prevents losing ground contact on convex angles.")]
+    public float groundSnapDistance = 0.01f;
 
     [Tooltip("Max walkable ground angle.\n" +
         "0 is level ground, 90 is a wall")]
