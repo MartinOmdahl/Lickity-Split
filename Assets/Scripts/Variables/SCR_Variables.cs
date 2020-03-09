@@ -28,6 +28,7 @@ public class SCR_Variables : ScriptableObject
 	public float airControlPercent = .5f;
     [Tooltip("Highest possible fall velocity")]
     public float terminalVelocity = 20;
+    public float gravityForce = 30;
 
     [Tooltip("Max walkable ground angle.\n" +
         "0 is level ground, 90 is a wall")]
@@ -61,4 +62,6 @@ public class SCR_Variables : ScriptableObject
 	public Vector2 camDistanceMinMax = new Vector2(1, 7);
     public Vector2 camPitchMinMax = new Vector2(-15, 85);
     public float camTurnSpeed = 0.1f;
+    [Tooltip("Vertical offset of camera's targeting position")]
+    public float camVerticalOffset = 0.48f;
 }

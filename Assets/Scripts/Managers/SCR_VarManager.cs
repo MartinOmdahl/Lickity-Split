@@ -23,6 +23,7 @@ public class SCR_VarManager : MonoBehaviour
 
     [Header("Player")]
     public int currentHealth;
+    public float playerGravityScale = 1;
 
     [Header("Collectibles")]
     public int currentSeeds;

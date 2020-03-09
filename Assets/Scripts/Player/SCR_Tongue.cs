@@ -21,7 +21,7 @@ public class SCR_Tongue : MonoBehaviour
     public Transform tongueTargetAnchor;
     public Transform tongueCollider;
     InputControls controls;
-    SCR_PlayerV3 movement;
+    SCR_PlayerMovement movement;
     SCR_PlayerAnimation animScript;
     SCR_VarManager varManager;
     SCR_ObjectReferenceManager objectRefs;
@@ -45,7 +45,7 @@ public class SCR_Tongue : MonoBehaviour
     {
         controls = new InputControls();
         rb = GetComponent<Rigidbody>();
-        movement = GetComponent<SCR_PlayerV3>();
+        movement = GetComponent<SCR_PlayerMovement>();
         animScript = GetComponentInChildren<SCR_PlayerAnimation>();
 
         tongueState = TongueState.Retracted;
@@ -275,6 +275,8 @@ public class SCR_Tongue : MonoBehaviour
         transform.rotation = targetRotation;
         targetJoint.transform.rotation = targetRotation;
 
+        // [Activate swinging animation]
+
         // Tell target that player is swinging on it
         target.isBeingSwung = true;
 
@@ -287,6 +289,9 @@ public class SCR_Tongue : MonoBehaviour
         // Set initial swing velocity. Change this in future to convert linear velocity to angular
         //rb.velocity = rb.velocity.normalized * 7;
         rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+        // Activate gravity on rigidbody for the duration of swing
+        rb.useGravity = true;
 
         // Deactivate normal movement
         movement.overrideNormalMovement = true;
@@ -322,7 +327,6 @@ public class SCR_Tongue : MonoBehaviour
 
         }
 
-
         // Set velocity on swing end. Change this in future to convert linear velocity to angular
         //rb.velocity = rb.velocity.normalized * targetJointRb.angularVelocity.magnitude * 2;
         movement.externalVelocity.velocity = rb.velocity;
@@ -330,6 +334,14 @@ public class SCR_Tongue : MonoBehaviour
         {
             movement.externalVelocity.velocity = new Vector3(movement.externalVelocity.velocity.x, 1, movement.externalVelocity.velocity.z);
         }
+
+        // Lower gravity as player comes out of swing
+        varManager.playerGravityScale = 0.5f;
+
+        // Deactivate gravity on player rigidbody (an external Constant Force is used during normal movement)
+        rb.useGravity = false;
+
+        // [End swing animation]
 
         // Re-activate normal movement
         movement.overrideNormalMovement = false;
@@ -485,7 +497,7 @@ public class SCR_Tongue : MonoBehaviour
             movement.overrideNormalMovement = true;
             
             // Delay enabling normal movement
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.3f);
         }
 
         // Enable normal movement

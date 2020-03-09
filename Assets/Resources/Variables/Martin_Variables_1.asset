@@ -24,6 +24,7 @@ MonoBehaviour:
   coyoteTime: 0.15
   airControlPercent: 0.6
   terminalVelocity: 10
+  gravityForce: 30
   maxGroundAngle: 47.5
   maxHeadBonkAngle: 35
   maxTargetDistance: 5
@@ -59,3 +60,4 @@ MonoBehaviour:
   camDistanceMinMax: {x: 1, y: 7}
   camPitchMinMax: {x: 0, y: 85}
   camTurnSpeed: 0.1
+  camVerticalOffset: 0.48

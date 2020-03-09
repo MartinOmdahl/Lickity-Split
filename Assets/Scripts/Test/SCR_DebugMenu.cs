@@ -103,7 +103,7 @@ public class SCR_DebugMenu : MonoBehaviour
         // Disable player controls
         if (objectRefs.player != null)
         {
-            objectRefs.player.GetComponent<SCR_PlayerV3>().enabled = false;
+            objectRefs.player.GetComponent<SCR_PlayerMovement>().enabled = false;
             objectRefs.player.GetComponent<SCR_Tongue>().enabled = false;
         }
 
@@ -126,7 +126,7 @@ public class SCR_DebugMenu : MonoBehaviour
         // Enable player controls
         if (objectRefs.player != null)
         {
-            objectRefs.player.GetComponent<SCR_PlayerV3>().enabled = true;
+            objectRefs.player.GetComponent<SCR_PlayerMovement>().enabled = true;
             objectRefs.player.GetComponent<SCR_Tongue>().enabled = true;
         }
 

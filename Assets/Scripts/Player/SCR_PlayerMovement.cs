@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SCR_PlayerV3 : MonoBehaviour
+public class SCR_PlayerMovement : MonoBehaviour
 {
 	#region Enable & Disable
 	private void OnEnable()
@@ -34,6 +34,7 @@ public class SCR_PlayerV3 : MonoBehaviour
 	Transform camT;
     CapsuleCollider movementColl;
     ConstantForce gravity;
+    SCR_VarManager varManager;
     #endregion
 
     #region Public variables
@@ -85,7 +86,15 @@ public class SCR_PlayerV3 : MonoBehaviour
 
         // unparent external velocity object
         externalVelocity.transform.SetParent(null);
+
+        // Set default gravity
+        gravity.force = Vector3.down * variables.gravityForce;
 	}
+
+    private void Start()
+    {
+        varManager = SCR_VarManager.Instance;
+    }
 
     private void FixedUpdate()
 	{
@@ -262,20 +271,26 @@ public class SCR_PlayerV3 : MonoBehaviour
         if (touchingGround)
         {
             // Align gravity to ground normal when grounded
-            gravity.force = -groundNormal * gravity.force.magnitude;
+            gravity.force = -groundNormal * variables.gravityForce * varManager.playerGravityScale;
 
             // Clamp gravity force below terminal velocity
             if (externalVelocity.velocity.magnitude > variables.terminalVelocity)
                 externalVelocity.velocity = externalVelocity.velocity.normalized * variables.terminalVelocity;
+
+            varManager.playerGravityScale = 1;
         }
         else
         {
             // Reset gravity direction in air
-            gravity.force = Vector3.down * gravity.force.magnitude;
+            gravity.force = Vector3.down * variables.gravityForce * varManager.playerGravityScale;
 
             // Clamp fall speed below terminal velocity
             float clampedYVelocity = Mathf.Clamp(externalVelocity.velocity.y, -variables.terminalVelocity, Mathf.Infinity);
             externalVelocity.velocity = new Vector3(externalVelocity.velocity.x, clampedYVelocity, externalVelocity.velocity.z);
+
+            // Lerp gravity scale towards 1. This is used during swing when gravity is temporarily reduced
+            if (varManager.playerGravityScale != 1)
+                varManager.playerGravityScale = Mathf.Lerp(varManager.playerGravityScale, 1, 2 * Time.fixedDeltaTime);
         }
 
         // Visualize external velocity

@@ -59,7 +59,7 @@ public class SCR_GameManager : MonoBehaviour
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
             // Enable player controls
-            objectRefs.player.GetComponent<SCR_PlayerV3>().enabled = true;
+            objectRefs.player.GetComponent<SCR_PlayerMovement>().enabled = true;
             objectRefs.player.GetComponent<SCR_Tongue>().enabled = true;
         }
         else if (!varManager.gameOver)
@@ -76,7 +76,7 @@ public class SCR_GameManager : MonoBehaviour
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
             // Disable player controls
-            objectRefs.player.GetComponent<SCR_PlayerV3>().enabled = false;
+            objectRefs.player.GetComponent<SCR_PlayerMovement>().enabled = false;
             objectRefs.player.GetComponent<SCR_Tongue>().enabled = false;
         }
     }

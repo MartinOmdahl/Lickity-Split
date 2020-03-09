@@ -15,6 +15,7 @@ public class SCR_PlayerAnimation : MonoBehaviour
 
     public Animator anim;
     public MeshRenderer eyesRenderer;
+    public Rigidbody rb;
 
     public Texture eyesForward, eyesLeft, eyesRight;
 
@@ -22,13 +23,13 @@ public class SCR_PlayerAnimation : MonoBehaviour
     public bool tongueOut;
 
     InputControls controls;
-    SCR_PlayerV3 movement;
+    SCR_PlayerMovement movement;
     SCR_Tongue tongue;
 
     private void Awake()
     {
         controls = new InputControls();
-        movement = GetComponentInParent<SCR_PlayerV3>();
+        movement = GetComponentInParent<SCR_PlayerMovement>();
         tongue = GetComponentInParent<SCR_Tongue>();
     }
 
@@ -39,6 +40,7 @@ public class SCR_PlayerAnimation : MonoBehaviour
         anim.SetBool("TouchingGround", movement.touchingGround);
         anim.SetBool("TongueOut", tongueOut);
         anim.SetBool("Jumping", movement.jumping);
+        anim.SetBool("Falling", rb.velocity.y < 0);
 
         if (!movement.jumping)
         {

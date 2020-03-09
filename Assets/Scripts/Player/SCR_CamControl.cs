@@ -28,8 +28,9 @@ public class SCR_CamControl : MonoBehaviour
     #region Local Variables
     float yaw, pitch;
     float targetDistance;
-	Vector3 RotationSmoothVelocity, currentRotation;
     float distanceSmoothVelocity;
+    Vector3 RotationSmoothVelocity, currentRotation;
+    Vector3 targetPosition;
     #endregion
 
     #region References
@@ -38,13 +39,14 @@ public class SCR_CamControl : MonoBehaviour
 
 
     private void Awake()
-	{
-		controls = new InputControls();
-        //transform.SetParent(null);
+    {
+        controls = new InputControls();
+        transform.SetParent(null);
+
 
         //currentRotation = transform.eulerAngles;
         // [yaw & pitch = (starting camera angle)]
-	}
+    }
 
     private void Start()
     {
@@ -52,23 +54,33 @@ public class SCR_CamControl : MonoBehaviour
         varManager = SCR_VarManager.Instance;
 
         targetDistance = variables.camDistanceMinMax.y;
-        transform.position = lookTarget.position - transform.forward * targetDistance;
+        targetPosition = lookTarget.position + Vector3.up * variables.camVerticalOffset;
+
+        transform.position = targetPosition - transform.forward * targetDistance;
     }
 
-    private void LateUpdate()
+
+    float svel;
+    private void FixedUpdate()
 	{
+        float targetYpos = Mathf.SmoothDamp(targetPosition.y, lookTarget.position.y + variables.camVerticalOffset, ref svel, 0.1f, Mathf.Infinity, Time.fixedDeltaTime);
+
+        // Set position camera will be looking at
+        targetPosition = new Vector3(lookTarget.position.x, targetYpos, lookTarget.position.z);
+
+        // Set yaw and pitch based on input
 		Vector2 input = controls.Player.Camera.ReadValue<Vector2>();
-		yaw += input.x * variables.camSensitivity * Time.deltaTime;
-		pitch -= input.y * variables.camSensitivity * Time.deltaTime;
+		yaw += input.x * variables.camSensitivity * Time.fixedDeltaTime;
+		pitch -= input.y * variables.camSensitivity * Time.fixedDeltaTime;
 		pitch = Mathf.Clamp(pitch, variables.camPitchMinMax.x, variables.camPitchMinMax.y);
 
-		currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref RotationSmoothVelocity, variables.camTurnSpeed);
+		currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref RotationSmoothVelocity, variables.camTurnSpeed, Mathf.Infinity, Time.fixedDeltaTime);
 		transform.eulerAngles = currentRotation;
 
         AvoidClipping();
+        float smoothDistance = Mathf.SmoothDamp(Vector3.Distance(transform.position, targetPosition), targetDistance, ref distanceSmoothVelocity, Time.fixedDeltaTime, 60);
 
-        float smoothDistance = Mathf.SmoothDamp(Vector3.Distance(transform.position, lookTarget.position), targetDistance, ref distanceSmoothVelocity, Time.deltaTime, 60);
-		transform.position = lookTarget.position - transform.forward * smoothDistance;
+		transform.position = targetPosition - transform.forward * smoothDistance;
 
 
 
@@ -86,8 +98,8 @@ public class SCR_CamControl : MonoBehaviour
         // Do a raycast from player to camera to find any obstructions
 
         bool hit = false;
-        Vector3 clipRayDirection = (transform.position - lookTarget.position).normalized;
-        if (Physics.Raycast(lookTarget.position, clipRayDirection, out RaycastHit clipHit, variables.camDistanceMinMax.y, clippingDetectMask, QueryTriggerInteraction.Ignore))
+        Vector3 clipRayDirection = (transform.position - targetPosition).normalized;
+        if (Physics.Raycast(targetPosition, clipRayDirection, out RaycastHit clipHit, variables.camDistanceMinMax.y, clippingDetectMask, QueryTriggerInteraction.Ignore))
         {
             hit = true;
         }
@@ -98,17 +110,16 @@ public class SCR_CamControl : MonoBehaviour
 
         // Do a raycast from camera to player
 
-        float pointsDistance = variables.camDistanceMinMax.y;
-        if (Physics.Raycast(transform.position, -clipRayDirection, out RaycastHit clipHitB, Vector3.Distance(transform.position, lookTarget.position), clippingDetectMask, QueryTriggerInteraction.Ignore))
+        float hitPointsDistance = variables.camDistanceMinMax.y;
+        if (Physics.Raycast(transform.position, -clipRayDirection, out RaycastHit clipHitB, Vector3.Distance(transform.position, targetPosition), clippingDetectMask, QueryTriggerInteraction.Ignore))
         {
             // compare hit points of raycasts to find width of obstruction
-            pointsDistance = Vector3.Distance(clipHitB.point, clipHit.point);
-
+            hitPointsDistance = Vector3.Distance(clipHitB.point, clipHit.point);
         }
 
         // If obstruction is wide enough, move camera closer to player.
-        if (pointsDistance > 0.5f && hit)
-            targetDistance = Vector3.Distance(lookTarget.position, clipHit.point) - 0.5f;
+        if (hitPointsDistance > 0.5f && hit)
+            targetDistance = Vector3.Distance(targetPosition, clipHit.point) - 0.5f;
 
         targetDistance = Mathf.Clamp(targetDistance, variables.camDistanceMinMax.x, variables.camDistanceMinMax.y);
     }
