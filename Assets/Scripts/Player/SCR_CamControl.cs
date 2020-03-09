@@ -21,7 +21,7 @@ public class SCR_CamControl : MonoBehaviour
     #endregion
 
     #region Public variables
-    [Tooltip("Collision layers camera tries to avoid clipping into")]
+    [Tooltip("Layers camera can collide with")]
     public LayerMask clippingDetectMask;
     #endregion
 

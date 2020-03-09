@@ -43,6 +43,7 @@ public class SCR_PlayerV3 : MonoBehaviour
     public bool overrideGroundDetect = false;
     public bool touchingGround;
     public bool canMidairJump = true;
+    public bool jumping;
     #endregion
 
     #region Local Variables
@@ -56,7 +57,6 @@ public class SCR_PlayerV3 : MonoBehaviour
     float jumpCooldown;
     Vector3 groundNormal;
     bool bonkedOnCeiling;
-    bool jumping;
     #endregion
 
     #region Debug variables

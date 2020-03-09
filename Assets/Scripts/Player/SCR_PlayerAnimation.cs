@@ -38,6 +38,13 @@ public class SCR_PlayerAnimation : MonoBehaviour
         anim.SetBool("Walking", controls.Player.Movement.ReadValue<Vector2>().magnitude > 0.1f);
         anim.SetBool("TouchingGround", movement.touchingGround);
         anim.SetBool("TongueOut", tongueOut);
+        anim.SetBool("Jumping", movement.jumping);
+
+        if (!movement.jumping)
+        {
+            anim.SetBool("PlayedJumpAnim", false);
+        }
+
         //print("Touching ground: " + movement.touchingGround + ", Walking: " + (controls.Player.Movement.ReadValue<Vector2>().magnitude > 0.05f) + ", Tongue out: " + tongueOut);
 
         // Set animator values
@@ -94,6 +101,11 @@ public class SCR_PlayerAnimation : MonoBehaviour
         // Re-activate normal movement animations
 
         anim.SetBool("OverrideWalk", false);
+    }
+
+    public void CompleteJumpAnim()
+    {
+        anim.SetBool("PlayedJumpAnim", true);
     }
     
 }

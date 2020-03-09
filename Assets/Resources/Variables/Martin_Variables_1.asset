@@ -17,7 +17,7 @@ MonoBehaviour:
   walkSpeed: 7
   runSpeed: 8
   playerTurnSpeed: 0.07
-  Acceleration: 0.4
+  accelerationTime: 0.05
   jumpHeight: 15
   airJumpHeight: 8
   airJumpCooldown: 0.4
