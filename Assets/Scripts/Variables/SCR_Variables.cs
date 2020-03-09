@@ -15,7 +15,8 @@ public class SCR_Variables : ScriptableObject
 	public float runSpeed = 8;
 
 	public float playerTurnSpeed = 0.1f;
-	public float Acceleration = 0.1f;
+    [Tooltip("Time it takes to reach top speed while walking")]
+	public float accelerationTime = 0.1f;
 
 	public float jumpHeight = 1.5f;
 	public float airJumpHeight = 1.5f;
@@ -25,7 +26,7 @@ public class SCR_Variables : ScriptableObject
     public float coyoteTime = 0.3f;
 	[Range(0,1)]
 	public float airControlPercent = .5f;
-    [Tooltip("Highest possible velocity during normal movement")]
+    [Tooltip("Highest possible fall velocity")]
     public float terminalVelocity = 20;
 
     [Tooltip("Max walkable ground angle.\n" +

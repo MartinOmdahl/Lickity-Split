@@ -137,7 +137,6 @@ public class SCR_PlayerV3 : MonoBehaviour
         {
             // moveDirection = Vector3.up * Mathf.SmoothDampAngle(moveDirection.y, targetMoveRotation, ref moveRotationVelocity, variables.playerTurnSpeed);
 
-            // Align move direction to ground normal
             moveDirection = Vector3.up * targetMoveRotation;
 
             //targetSpeed = (running ? variables.runSpeed : variables.walkSpeed) * input.magnitude;
@@ -151,9 +150,14 @@ public class SCR_PlayerV3 : MonoBehaviour
         }
 
         //Check if Running & Set Speed Accordingly:
-        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.Acceleration);
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.accelerationTime);
 
-        Vector3 velocity = Vector3.Cross(groundNormal, -transform.right) * currentSpeed;
+        // Find the right vector of player's move direction
+        Vector3 rightVector = Vector3.Cross(Vector3.up, Quaternion.Euler(moveDirection) * Vector3.forward);
+
+        // Align move direction to ground normal.
+        // This is done by crossing ground angle with the right vector of player's move direction, resulting in a vector that is perpendicular to both.
+        Vector3 velocity = Vector3.Cross(groundNormal, -rightVector) * currentSpeed;
 
         rb.velocity = velocity;
     }
@@ -195,7 +199,7 @@ public class SCR_PlayerV3 : MonoBehaviour
         }
 
         //Check if Running & Set Speed Accordingly:
-        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.Acceleration);
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.accelerationTime);
 
         //Move the Player:
         Vector3 velocity = (Quaternion.Euler(moveDirection) * Vector3.forward) * currentSpeed;
@@ -232,7 +236,7 @@ public class SCR_PlayerV3 : MonoBehaviour
         }
 
         //Check if Running & Set Speed Accordingly:
-        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.Acceleration);
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref moveSpeedVelocity, variables.accelerationTime);
 
         //Move the Player:
         Vector3 internalVelocity = (Quaternion.Euler(moveDirection) * Vector3.forward) * currentSpeed * variables.airControlPercent;

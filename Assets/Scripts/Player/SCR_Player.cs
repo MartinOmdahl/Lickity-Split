@@ -59,7 +59,7 @@ public class SCR_Player : MonoBehaviour
 
 		//Check if Running & Set Speed Accordingly:
 		float targetSpeed = (running ? variables.runSpeed : variables.walkSpeed) * input.magnitude;
-		currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedVelocity, ModifiedSmoothTime(variables.Acceleration));
+		currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedVelocity, ModifiedSmoothTime(variables.accelerationTime));
 
 		//Add Gravity:
 		yVelocity += Time.deltaTime * variables.gravity;
