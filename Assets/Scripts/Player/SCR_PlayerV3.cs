@@ -533,6 +533,7 @@ public class SCR_PlayerV3 : MonoBehaviour
         }
         else
         {
+            // If not touching ground, rotate back to normal rotation (slowly)
             playerMesh.localRotation = Quaternion.Euler(playerMesh.localEulerAngles.x, 0, playerMesh.localEulerAngles.z);
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(0, 0, 0), 6 * Time.fixedDeltaTime);
         }
