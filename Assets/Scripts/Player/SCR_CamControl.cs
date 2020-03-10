@@ -31,6 +31,9 @@ public class SCR_CamControl : MonoBehaviour
     float distanceSmoothVelocity;
     Vector3 RotationSmoothVelocity, currentRotation;
     Vector3 targetPosition;
+    float VerticalSmoothVelocity;
+    bool useCameraControl = true;
+    float yawCenterSmoothVelocity, pitchCenterSmoothVelocity;
     #endregion
 
     #region References
@@ -42,10 +45,6 @@ public class SCR_CamControl : MonoBehaviour
     {
         controls = new InputControls();
         transform.SetParent(null);
-
-
-        //currentRotation = transform.eulerAngles;
-        // [yaw & pitch = (starting camera angle)]
     }
 
     private void Start()
@@ -53,36 +52,48 @@ public class SCR_CamControl : MonoBehaviour
         SCR_ObjectReferenceManager.Instance.playerCamera = GetComponent<Camera>();
         varManager = SCR_VarManager.Instance;
 
+        // Set starting position and distance
         targetDistance = variables.camDistanceMinMax.y;
         targetPosition = lookTarget.position + Vector3.up * variables.camVerticalOffset;
-
         transform.position = targetPosition - transform.forward * targetDistance;
+
+        // Set starting rotation
+        pitch = variables.camDefaultPitch;
+        yaw = lookTarget.eulerAngles.y;
+        currentRotation = new Vector3(pitch, yaw, 0);
+        transform.eulerAngles = currentRotation;
     }
 
 
-    float svel;
     private void FixedUpdate()
 	{
-        float targetYpos = Mathf.SmoothDamp(targetPosition.y, lookTarget.position.y + variables.camVerticalOffset, ref svel, 0.1f, Mathf.Infinity, Time.fixedDeltaTime);
+        if(lookTarget == null)
+        {
+            useCameraControl = false;
+            Destroy(gameObject);
+        }
 
         // Set position camera will be looking at
+        float targetYpos = Mathf.SmoothDamp(targetPosition.y, lookTarget.position.y + variables.camVerticalOffset, ref VerticalSmoothVelocity, 0.1f, Mathf.Infinity, Time.fixedDeltaTime);
         targetPosition = new Vector3(lookTarget.position.x, targetYpos, lookTarget.position.z);
 
-        // Set yaw and pitch based on input
-		Vector2 input = controls.Player.Camera.ReadValue<Vector2>();
-		yaw += input.x * variables.camSensitivity * Time.fixedDeltaTime;
-		pitch -= input.y * variables.camSensitivity * Time.fixedDeltaTime;
-		pitch = Mathf.Clamp(pitch, variables.camPitchMinMax.x, variables.camPitchMinMax.y);
+        if (useCameraControl)
+        {
+            // Set yaw and pitch based on input
+            Vector2 input = controls.Player.Camera.ReadValue<Vector2>();
+            yaw += input.x * variables.camSensitivity * Time.fixedDeltaTime;
+            pitch -= input.y * variables.camSensitivity * Time.fixedDeltaTime;
+            pitch = Mathf.Clamp(pitch, variables.camPitchMinMax.x, variables.camPitchMinMax.y);
 
-		currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref RotationSmoothVelocity, variables.camTurnSpeed, Mathf.Infinity, Time.fixedDeltaTime);
-		transform.eulerAngles = currentRotation;
+            currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(pitch, yaw), ref RotationSmoothVelocity, variables.camTurnSpeed, Mathf.Infinity, Time.fixedDeltaTime);
+
+            transform.eulerAngles = currentRotation;
+        }
 
         AvoidClipping();
         float smoothDistance = Mathf.SmoothDamp(Vector3.Distance(transform.position, targetPosition), targetDistance, ref distanceSmoothVelocity, Time.fixedDeltaTime, 60);
 
 		transform.position = targetPosition - transform.forward * smoothDistance;
-
-
 
 
         // Disable camera movement if player dies. Be careful with this, may need to refactor in the future...
@@ -92,6 +103,15 @@ public class SCR_CamControl : MonoBehaviour
             this.enabled = false;
         }
 	}
+
+    private void Update()
+    {
+        if (controls.Player.CenterCamera.triggered
+            && lookTarget != null)
+        {
+            StartCoroutine(CenterCamera());
+        }
+    }
 
     void AvoidClipping()
     {
@@ -122,5 +142,38 @@ public class SCR_CamControl : MonoBehaviour
             targetDistance = Vector3.Distance(targetPosition, clipHit.point) - 0.5f;
 
         targetDistance = Mathf.Clamp(targetDistance, variables.camDistanceMinMax.x, variables.camDistanceMinMax.y);
+    }
+
+    IEnumerator CenterCamera()
+    {
+        useCameraControl = false;
+
+        float newYaw = lookTarget.eulerAngles.y;
+
+        //while (yaw - newYaw >= 360)
+        //{
+        //    newYaw += 360;
+        //}
+
+        //while (yaw - newYaw <= -360)
+        //{
+        //    newYaw -= 360;
+        //}
+
+        while (Mathf.Abs(transform.eulerAngles.y - newYaw) > 1)
+        {
+            yield return new WaitForFixedUpdate();
+
+            pitch = Mathf.SmoothDampAngle(pitch, variables.camDefaultPitch, ref pitchCenterSmoothVelocity, .1f, Mathf.Infinity, Time.fixedDeltaTime);
+            yaw = Mathf.SmoothDampAngle(yaw, newYaw, ref yawCenterSmoothVelocity, .1f, Mathf.Infinity, Time.fixedDeltaTime);
+
+            transform.eulerAngles = new Vector3(pitch, yaw, 0);
+        }
+
+        pitch = variables.camDefaultPitch;
+        yaw = newYaw;
+        currentRotation = new Vector3(pitch, yaw, 0);
+
+        useCameraControl = true;
     }
 }

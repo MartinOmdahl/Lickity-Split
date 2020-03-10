@@ -60,5 +60,6 @@ MonoBehaviour:
   camSensitivity: 180
   camDistanceMinMax: {x: 1, y: 7}
   camPitchMinMax: {x: 0, y: 85}
+  camDefaultPitch: 20
   camTurnSpeed: 0.1
   camVerticalOffset: 0.48

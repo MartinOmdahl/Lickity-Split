@@ -92,6 +92,10 @@ public class SCR_PlayerMovement : MonoBehaviour
 
         // Set default gravity
         gravity.force = Vector3.down * variables.gravityForce;
+
+        // Set starting rotation
+        targetRotation = transform.eulerAngles.y;
+        moveDirection = transform.forward;
 	}
 
     private void Start()

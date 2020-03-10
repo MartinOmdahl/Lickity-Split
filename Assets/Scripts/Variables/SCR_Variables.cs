@@ -64,6 +64,7 @@ public class SCR_Variables : ScriptableObject
     [Tooltip("Camera defaults to max distance, moves closer if something obstructs view of player.")]
 	public Vector2 camDistanceMinMax = new Vector2(1, 7);
     public Vector2 camPitchMinMax = new Vector2(-15, 85);
+    public float camDefaultPitch = 20;
     public float camTurnSpeed = 0.1f;
     [Tooltip("Vertical offset of camera's targeting position")]
     public float camVerticalOffset = 0.48f;

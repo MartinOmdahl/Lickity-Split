@@ -105,6 +105,14 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""CenterCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b0ef2c0-16b8-4d68-abfc-6a73e1f0e50d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -239,6 +247,28 @@ public class @InputControls : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""62017ebe-0907-406f-b8cf-eb9de2ba4732"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CenterCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""882e7865-9430-44af-9890-f8ef0ec6ad19"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CenterCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -264,6 +294,7 @@ public class @InputControls : IInputActionCollection, IDisposable
         m_Player_TongueButtonPress = m_Player.FindAction("Tongue Button Press", throwIfNotFound: true);
         m_Player_TongueButtonRelease = m_Player.FindAction("Tongue Button Release", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_CenterCamera = m_Player.FindAction("CenterCamera", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
     }
@@ -326,6 +357,7 @@ public class @InputControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_TongueButtonPress;
     private readonly InputAction m_Player_TongueButtonRelease;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_CenterCamera;
     public struct PlayerActions
     {
         private @InputControls m_Wrapper;
@@ -341,6 +373,7 @@ public class @InputControls : IInputActionCollection, IDisposable
         public InputAction @TongueButtonPress => m_Wrapper.m_Player_TongueButtonPress;
         public InputAction @TongueButtonRelease => m_Wrapper.m_Player_TongueButtonRelease;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @CenterCamera => m_Wrapper.m_Player_CenterCamera;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -383,6 +416,9 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @CenterCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCenterCamera;
+                @CenterCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCenterCamera;
+                @CenterCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCenterCamera;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -420,6 +456,9 @@ public class @InputControls : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @CenterCamera.started += instance.OnCenterCamera;
+                @CenterCamera.performed += instance.OnCenterCamera;
+                @CenterCamera.canceled += instance.OnCenterCamera;
             }
         }
     }
@@ -462,6 +501,7 @@ public class @InputControls : IInputActionCollection, IDisposable
         void OnTongueButtonPress(InputAction.CallbackContext context);
         void OnTongueButtonRelease(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnCenterCamera(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
