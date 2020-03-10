@@ -194,6 +194,7 @@ public class SCR_Tongue : MonoBehaviour
         // Tell target attack is finished
         target.isBeingAttacked = false;
 
+
         // Check what type of tongue interaction should be used
         switch (target.targetType)
         {

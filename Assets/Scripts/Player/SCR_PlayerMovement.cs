@@ -470,7 +470,8 @@ public class SCR_PlayerMovement : MonoBehaviour
                 Debug.DrawLine(transform.position, groundHit.point, Color.red, 10);
 
                 transform.position = groundHit.point;
-                touchingGround = true;
+
+                ConfirmGroundContact(groundHit.normal);
             }
         }
     }
@@ -489,30 +490,38 @@ public class SCR_PlayerMovement : MonoBehaviour
             // If contact is an appropriate angle, player is touching ground
             if (contactAngle < variables.maxGroundAngle && !overrideGroundDetect)
             {
-                if (offGroundTime > 0)
-                    OnLanding();
-
-                touchingGround = true;
-                offGroundTime = 0;
-                jumping = false;
-                canMidairJump = true;
-
-                // Setting ground normal based on collision alone is too inaccurate and causes a lot of jitter.
-                // To combat this, we use 4 additional raycasts with slightly different offsets, and use the average of their normals.
-                Vector3[] offsets = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
-                Vector3 averageNormal = contact.normal;
-
-                foreach (var offset in offsets)
-                {
-                    if (Physics.Raycast(transform.position + (offset * 0.01f), Vector3.down, out RaycastHit groundHit, variables.groundSnapDistance, groundMask, QueryTriggerInteraction.Ignore))
-                    {
-                        averageNormal += groundHit.normal;
-                    }
-
-                }
-                groundNormal = averageNormal.normalized;
+                ConfirmGroundContact(contact.normal);
             }
         }
+    }
+
+    /// <summary>
+    /// This function gets called to confirm that player is touching ground
+    /// </summary>
+    void ConfirmGroundContact(Vector3 normal)
+    {
+        if (offGroundTime > 0)
+            OnLanding();
+
+        touchingGround = true;
+        offGroundTime = 0;
+        jumping = false;
+        canMidairJump = true;
+
+        // Setting ground normal based on collision alone is too inaccurate and causes a lot of jitter.
+        // To combat this, we use 4 additional raycasts with slightly different offsets, and use the average of their normals.
+        Vector3[] offsets = { Vector3.forward, Vector3.back, Vector3.right, Vector3.left };
+        Vector3 averageNormal = normal;
+
+        foreach (var offset in offsets)
+        {
+            if (Physics.Raycast(transform.position + (offset * 0.01f), Vector3.down, out RaycastHit groundHit, variables.groundSnapDistance, groundMask, QueryTriggerInteraction.Ignore))
+            {
+                averageNormal += groundHit.normal;
+            }
+
+        }
+        groundNormal = averageNormal.normalized;
     }
 
     /// <summary>
