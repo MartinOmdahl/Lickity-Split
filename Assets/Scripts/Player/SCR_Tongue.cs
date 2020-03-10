@@ -72,10 +72,13 @@ public class SCR_Tongue : MonoBehaviour
 
         // Check for tongue attack initiation
         if (controls.Player.TongueButtonPress.triggered
-            && tongueState == TongueState.Retracted
-            && currentTarget != null)
+            && tongueState == TongueState.Retracted)
         {
-            StartCoroutine(TongueAttack(currentTarget));
+            if (currentTarget != null)
+                StartCoroutine(TongueAttack(currentTarget));
+            else
+                StartCoroutine(TongueAttackWithoutTarget());
+
             tongueState = TongueState.Attacking;
         }
     }
@@ -103,7 +106,7 @@ public class SCR_Tongue : MonoBehaviour
             bool targetInRange = targetDistance <= variables.maxTargetDistance;
             float angleToTarget = Quaternion.Angle(tongueTargetAnchor.rotation, Quaternion.LookRotation((target.transform.position - tongueMeshAnchor.position).normalized, Vector3.up));
 
-            if (targetInRange 
+            if (targetInRange
                 && angleToTarget < variables.maxTargetAngle
                 && (currentTarget == null || targetDistance < Vector3.Distance(tongueTargetAnchor.position, currentTarget.transform.position)))
             {
@@ -131,7 +134,7 @@ public class SCR_Tongue : MonoBehaviour
     void InitiateLockOn()
     {
         // Lock on autotargeted object, if any. Otherwise, do nothing.
-        if(currentTarget != null)
+        if (currentTarget != null)
         {
             lockedOnTarget = true;
         }
@@ -165,6 +168,7 @@ public class SCR_Tongue : MonoBehaviour
      * FUNCTIONS IN THIS REGION:
      * Tongue Attack
      * Tongue Retract
+     * Tongue Attack Without Target
      */
 
 
@@ -246,6 +250,32 @@ public class SCR_Tongue : MonoBehaviour
         tongueCollider.position = tongueMeshAnchor.position;
 
         tongueState = TongueState.Retracted;
+    }
+
+    /// <summary>
+    /// If player starts tongue attack without targeting anything, this runs instead of regulat Tongue Attack
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator TongueAttackWithoutTarget()
+    {
+        // Tell animation that tongue is being extended
+        animScript.tongueOut = true;
+
+        Vector3 targetPosition = tongueMeshAnchor.position + transform.forward * (variables.maxTargetDistance * 0.75f);
+
+        float TongueDistance = 0;
+        while (TongueDistance < 1)
+        {
+            // Linearly interpolate tongue's position from body to target
+            TongueDistance += 10 * Time.deltaTime;
+            tongueCollider.position = Vector3.Lerp(tongueMeshAnchor.position, 
+                Vector3.Lerp(targetPosition, tongueMeshAnchor.position + transform.forward * (variables.maxTargetDistance * 0.75f), 0.8f), 
+                variables.tongueAttackCurve.Evaluate(TongueDistance));
+
+            yield return null;
+        }
+
+        StartCoroutine(TongueRetract(tongueCollider.position, 1));
     }
     #endregion
 
