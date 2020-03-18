@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -10,10 +11,6 @@ using TMPro;
 public class SCR_DebugMenu : MonoBehaviour
 {
     #region Public variables
-
-    public List<KeyCode> debugMenuShortcut = new List<KeyCode>();
-    public KeyCode closeMenuButton;
-    [Tooltip("How long should shortcut be held?")]
     public float shortcutHoldTime = 1;
     [Tooltip("Prefab used for setting player's position")]
     public GameObject playerPositionObject;
@@ -37,6 +34,7 @@ public class SCR_DebugMenu : MonoBehaviour
     #endregion
 
     #region References
+    Gamepad gamepad;
     SCR_VarManager varManager;
     SCR_ObjectReferenceManager objectRefs;
     #endregion
@@ -46,6 +44,7 @@ public class SCR_DebugMenu : MonoBehaviour
         varManager = SCR_VarManager.Instance;
         objectRefs = SCR_ObjectReferenceManager.Instance;
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        gamepad = Gamepad.current;
 
         // make sure debug menu is closed when at beginning of play
         CloseDebugMenu();
@@ -70,10 +69,12 @@ public class SCR_DebugMenu : MonoBehaviour
         // If holding debug shortcut: increase "seconds held" timer. 
         // Else: reset timer.
         secondsHeld += Time.deltaTime;
-        foreach (var shortcutKey in debugMenuShortcut)
+
+        if (!gamepad.selectButton.isPressed
+            || !gamepad.leftShoulder.isPressed
+            || !gamepad.rightShoulder.isPressed)
         {
-            if (!Input.GetKey(shortcutKey))
-                secondsHeld = 0;
+            secondsHeld = 0;
         }
 
         // Open menu if shortcut has been held long enough
@@ -140,7 +141,7 @@ public class SCR_DebugMenu : MonoBehaviour
     void MenuUpdate()
     {
         // Check for close menu input
-        if (Input.GetKeyDown(closeMenuButton))
+        if (gamepad.selectButton.wasPressedThisFrame)
             CloseDebugMenu();
 
         // Collected gold nuts button
