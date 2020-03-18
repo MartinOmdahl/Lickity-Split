@@ -34,6 +34,7 @@ public class SCR_CamControl : MonoBehaviour
     float VerticalSmoothVelocity;
     bool useCameraControl = true;
     float yawCenterSmoothVelocity, pitchCenterSmoothVelocity;
+    IEnumerator centerCamera;
     #endregion
 
     #region References
@@ -109,10 +110,20 @@ public class SCR_CamControl : MonoBehaviour
         if (controls.Player.CenterCamera.triggered
             && lookTarget != null)
         {
-            StartCoroutine(CenterCamera());
+            // If Center camera coroutine is already running, stop it and start a new one
+            if (centerCamera != null)
+            {
+                StopCoroutine(centerCamera);
+            }
+
+            centerCamera = CenterCamera();
+            StartCoroutine(centerCamera);
         }
     }
-
+    /// <summary>
+    /// This function runs in FixedUpdate. 
+    /// It prevents camera from clipping into solid objects, by moving it closer to player if necessary.
+    /// </summary>
     void AvoidClipping()
     {
         // Do a raycast from player to camera to find any obstructions
@@ -175,5 +186,6 @@ public class SCR_CamControl : MonoBehaviour
         currentRotation = new Vector3(pitch, yaw, 0);
 
         useCameraControl = true;
+        centerCamera = null;
     }
 }
