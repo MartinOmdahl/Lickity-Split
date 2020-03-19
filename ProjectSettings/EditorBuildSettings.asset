@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SCE_Ferdi/TestLevel.unity
-    guid: 1856ce7382ccac246a9437c8cc7fd318
-  - enabled: 1
     path: Assets/Scenes/SCE_Start.unity
     guid: c29db49d3b877e2488ee0e4246af7c65
+  - enabled: 1
+    path: Assets/Scenes/SCE_Ferdi/TestLevel.unity
+    guid: 1856ce7382ccac246a9437c8cc7fd318
   - enabled: 1
     path: Assets/Scenes/SCE_Credits.unity
     guid: 32ba6c0ee70e36f48bef6e05c508dd61
