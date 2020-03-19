@@ -209,6 +209,7 @@ public class SCR_DebugMenu : MonoBehaviour
 
             if (Input.GetButtonDown("Submit") && SceneManager.GetSceneByBuildIndex(sceneToLoad) != null)
             {
+                CloseDebugMenu();
                 print("Loaded scene index " + sceneToLoad);
                 SceneManager.LoadScene(sceneToLoad);
             }
@@ -239,6 +240,7 @@ public class SCR_DebugMenu : MonoBehaviour
     {
         // Function called by button in menu
 
+        CloseDebugMenu();
         Destroy(varManager.gameObject);
         SceneManager.LoadScene(0);
         print("Game has been reset");

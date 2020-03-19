@@ -19,6 +19,7 @@ public class SCR_PlayerSystem : MonoBehaviour
 
         objectRefs.player = gameObject;
         varManager.currentHealth = variables.maxHealth;
+        varManager.playerGravityScale = 1;
 
         tongueParent.SetParent(tongueParentJoint);
 

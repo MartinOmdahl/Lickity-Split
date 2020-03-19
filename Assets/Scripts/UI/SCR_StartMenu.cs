@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class SCR_StartMenu : MonoBehaviour
 {
-    public Transform buttonHighlighter;
+    public RectTransform buttonHighlighter;
 
     EventSystem eventSystem;
 
@@ -24,11 +24,14 @@ public class SCR_StartMenu : MonoBehaviour
     void HighlightSelectedButton()
     {
         if (eventSystem.currentSelectedGameObject != null)
+        {
             buttonHighlighter.position = Vector3.Lerp(buttonHighlighter.position, eventSystem.currentSelectedGameObject.transform.position, 50 * Time.deltaTime);
+        }
     }
 
     public void StartGameButton()
     {
+        SCR_MenuMusic.instance.StopPlaying();
         SceneManager.LoadScene(1);
     }
 
@@ -41,6 +44,4 @@ public class SCR_StartMenu : MonoBehaviour
     {
         Application.Quit();
     }
-
-
 }
