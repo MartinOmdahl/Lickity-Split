@@ -724,6 +724,8 @@ MonoBehaviour:
   starIndex: 101
   normalMesh: {fileID: 7096045007387793030}
   collectedMesh: {fileID: 6246278852356375529}
+  collectionEffect: {fileID: 7578721929898719931, guid: 4bf721d0cd105904e89b3c51d97fb892,
+    type: 3}
 --- !u!135 &7096045007237522683
 SphereCollider:
   m_ObjectHideFlags: 0

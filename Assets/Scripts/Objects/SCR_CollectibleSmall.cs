@@ -6,6 +6,7 @@ public class SCR_CollectibleSmall : MonoBehaviour
 {
     [Tooltip("How many seeds will player get from this object?")]
     public int seedValue = 1;
+    public GameObject collectionEffect;
 
     bool useTrigger = true;
 
@@ -36,10 +37,13 @@ public class SCR_CollectibleSmall : MonoBehaviour
         }
     }
 
-    void GetCollected()
+    public void GetCollected()
     {
         varManager.currentSeeds += seedValue;
-        // [Play effect]
+
+        // Play effect
+        Instantiate(collectionEffect, transform.position, collectionEffect.transform.rotation);
+
         Destroy(gameObject);
     }
 }

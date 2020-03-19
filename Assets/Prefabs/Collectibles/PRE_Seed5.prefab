@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 1
+  targetIconOffset: {x: 0, y: 0.5, z: 0}
   isBeingAttacked: 0
   canSwingFromGround: 1
   startWithVelocity: 1
@@ -60,7 +61,6 @@ MonoBehaviour:
   timeToPull: 1
   isBeingPulled: 0
   eventTriggered: 0
-  targetIconOffset: {x: 0, y: 0.5, z: 0}
 --- !u!114 &3795857101547909548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,6 +74,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seedValue: 5
+  collectionEffect: {fileID: 7578721929898719931, guid: c5d0f99f6bfa64d4bbe02f7e2c5c6145,
+    type: 3}
 --- !u!135 &3795857101547909551
 SphereCollider:
   m_ObjectHideFlags: 0

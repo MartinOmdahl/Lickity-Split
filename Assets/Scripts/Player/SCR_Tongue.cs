@@ -434,8 +434,7 @@ public class SCR_Tongue : MonoBehaviour
             switch (target.rewardType)
             {
                 case SCR_TongueTarget.RewardType.Coin:
-                    varManager.currentSeeds += target.rewardCount;
-                    // [Play coin sound]
+                    target.GetComponent<SCR_CollectibleSmall>().GetCollected();
                     break;
                 case SCR_TongueTarget.RewardType.TempReward2:
                     // [Give player reward type]

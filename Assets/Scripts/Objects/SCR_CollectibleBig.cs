@@ -7,6 +7,7 @@ public class SCR_CollectibleBig : MonoBehaviour
     [Tooltip("This Gold Nut's unique ID")]
     public int starIndex;
     public GameObject normalMesh, collectedMesh;
+    public GameObject collectionEffect;
 
     bool useTrigger = true;
     bool alreadyCollected = false;
@@ -58,7 +59,9 @@ public class SCR_CollectibleBig : MonoBehaviour
             varManager.CollectedGoldNuts.Add(starIndex);
         }
 
-        // [Play effect]
+        // Play effect
+        Instantiate(collectionEffect, transform.position, collectionEffect.transform.rotation);
+
         yield return null;
 
         Destroy(gameObject);
