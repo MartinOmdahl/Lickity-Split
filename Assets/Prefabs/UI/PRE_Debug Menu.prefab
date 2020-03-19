@@ -4493,9 +4493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3199f7931b36e489ed2dda4bf9a5bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMenuShortcut: 4e0100004f01000050010000
-  closeMenuButton: 336
-  shortcutHoldTime: 0.5
+  shortcutHoldTime: 9999
   playerPositionObject: {fileID: 4639931764764344005, guid: 3279871d8547c844eb296cdf05ca9c6a,
     type: 3}
   debugMenu: {fileID: 1023574396199866871}

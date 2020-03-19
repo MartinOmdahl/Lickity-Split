@@ -20,8 +20,20 @@ public class SCR_GameManager : MonoBehaviour
     SCR_VarManager varManager;
     SCR_ObjectReferenceManager objectRefs;
 
+    public static SCR_GameManager Instance;
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            transform.parent = null;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         controls = new InputControls();
         InputActions();
     }
