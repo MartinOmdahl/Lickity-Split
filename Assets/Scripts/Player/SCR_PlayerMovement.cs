@@ -29,6 +29,7 @@ public class SCR_PlayerMovement : MonoBehaviour
     public Rigidbody externalVelocity;
     public PhysicMaterial noFrictionMat, highFrictionMat;
     public Transform playerMesh;
+    public SCR_PlayerSoundTriggers soundTriggers;
     InputControls controls;
     Rigidbody rb;
 	Transform camT;
@@ -339,13 +340,18 @@ public class SCR_PlayerMovement : MonoBehaviour
         // Change everything about this later, please
         externalVelocity.velocity = new Vector3(rb.velocity.x * variables.airControlPercent, variables.jumpHeight, rb.velocity.z * variables.airControlPercent);
 
+        // Visualize jump (deprecated)
+        //Debug.DrawLine(transform.position, transform.position + Vector3.up, Color.red, 0.1f);
+
+        // Play jump sound effect
+        soundTriggers.PlayJumpSound();
+
         // Stop checking for ground collision for a few frames after jump
         overrideGroundDetect = true;
         touchingGround = false;
 
-        Debug.DrawLine(transform.position, transform.position + Vector3.up, Color.red, 0.1f);
 
-        // Start checking for ground collision again
+        // Start checking for ground collision again after a delay
         yield return new WaitForSeconds(0.1f);
         overrideGroundDetect = false;
     }
@@ -382,7 +388,11 @@ public class SCR_PlayerMovement : MonoBehaviour
             //rb.velocity = new Vector3(rb.velocity.x, 4f, rb.velocity.z);
             externalVelocity.velocity = new Vector3(rb.velocity.x * variables.airControlPercent, variables.airJumpHeight, rb.velocity.z * variables.airControlPercent);
 
-            Debug.DrawLine(transform.position, transform.position + Vector3.up / 2, Color.blue, 0.1f);
+            // Visualize midair jump (deprecated)
+            //Debug.DrawLine(transform.position, transform.position + Vector3.up / 2, Color.blue, 0.1f);
+
+            // Play midair jump sound
+            soundTriggers.PlayMidairJumpSound();
         }
         yield return null;
     }

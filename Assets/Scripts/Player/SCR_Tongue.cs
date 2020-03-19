@@ -20,6 +20,7 @@ public class SCR_Tongue : MonoBehaviour
     public Transform tongueMeshAnchor;
     public Transform tongueTargetAnchor;
     public Transform tongueCollider;
+    public SCR_PlayerSoundTriggers soundTriggers;
     InputControls controls;
     SCR_PlayerMovement movement;
     SCR_PlayerAnimation animScript;
@@ -180,6 +181,9 @@ public class SCR_Tongue : MonoBehaviour
         // Tell animation that tongue is being extended
         animScript.tongueOut = true;
 
+        // Play tongue attack sound
+        soundTriggers.PlayTongueAttackSound();
+
         float TongueDistance = 0;
         while (TongueDistance < 1 && target != null)
         {
@@ -261,6 +265,9 @@ public class SCR_Tongue : MonoBehaviour
     {
         // Tell animation that tongue is being extended
         animScript.tongueOut = true;
+
+        // Play tongue attack sound
+        soundTriggers.PlayTongueAttackSound();
 
         Vector3 targetPosition = tongueMeshAnchor.position + transform.forward * (variables.maxTargetDistance * 0.75f);
 
