@@ -20,6 +20,8 @@ public class SCR_ObjectReferenceManager : MonoBehaviour
     }
     #endregion
 
+    public SCR_LevelSettings levelSettings;
+
     public SCR_Variables variables;
 
     public List<SCR_TongueTarget> tongueTargets = new List<SCR_TongueTarget>();
@@ -32,4 +34,9 @@ public class SCR_ObjectReferenceManager : MonoBehaviour
     public CanvasGroup gameOverMenu;
 
     public SCR_TargetingIcon targetIcon;
+
+    public AudioSource music;
+    public AudioSource ambience;
+
+
 }
