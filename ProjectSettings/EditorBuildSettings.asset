@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SCE_Credits.unity
     guid: 32ba6c0ee70e36f48bef6e05c508dd61
+  - enabled: 1
+    path: Assets/Scenes/SCE_MartinProgrammingSandbox.unity
+    guid: 7f43b96379930db4e8e94f2207a83b10
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: bd7982a0cc7b77a4ba9b1dffa55c719c,
       type: 2}
