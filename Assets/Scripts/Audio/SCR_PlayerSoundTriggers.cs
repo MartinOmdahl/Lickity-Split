@@ -17,10 +17,26 @@ public class SCR_PlayerSoundTriggers : MonoBehaviour
     public AudioSource tongueAttackSource;
     public Vector2 tongueAttackPitchRange = Vector2.one;
 
+    [Header("Swallow")]
+    public AudioSource SwallowSource;
+    public Vector2 SwallowPitchRange = Vector2.one;
+
     public void PlayFootstepSound()
     {
         footstepSource.pitch = Random.Range(footstepPitchRange.x, footstepPitchRange.y);
         footstepSource.Play();
+    }
+
+    public void PlayJumpSound()
+    {
+        jumpSource.pitch = Random.Range(jumpPitchRange.x, jumpPitchRange.y);
+        jumpSource.Play();
+    }
+
+    public void PlayMidairJumpSound()
+    {
+        jumpSource.pitch = Random.Range(midairJumpPitchRange.x, midairJumpPitchRange.y);
+        jumpSource.Play();
     }
 
     public void PlayTongueAttackSound()
@@ -29,15 +45,10 @@ public class SCR_PlayerSoundTriggers : MonoBehaviour
         tongueAttackSource.Play();
     }
 
-    public void PlayJumpSound()
+    public void PlaySwallowSound()
     {
-        jumpSource.pitch = Random.Range(jumpPitchRange.x, jumpPitchRange.y);
-        jumpSource.Play();
-    }
-    public void PlayMidairJumpSound()
-    {
-        jumpSource.pitch = Random.Range(midairJumpPitchRange.x, midairJumpPitchRange.y);
-        jumpSource.Play();
+        SwallowSource.pitch = Random.Range(SwallowPitchRange.x, SwallowPitchRange.y);
+        SwallowSource.Play();
     }
 }
 

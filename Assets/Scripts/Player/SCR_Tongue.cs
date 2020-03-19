@@ -421,6 +421,9 @@ public class SCR_Tongue : MonoBehaviour
             target.transform.localScale = target.transform.localScale * 0.75f;
         }
 
+        // Play eat sound
+        soundTriggers.PlaySwallowSound();
+
         // Start tongue retraction, wait until it finishes
         StartCoroutine(TongueRetract(tongueCollider.transform.position, 1));
         yield return new WaitUntil(() => tongueState == TongueState.Retracted);
@@ -441,6 +444,7 @@ public class SCR_Tongue : MonoBehaviour
 
             // [Play animation]
         }
+
 
         // Destroy target
         if (target != null)
