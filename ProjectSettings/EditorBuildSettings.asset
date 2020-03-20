@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SCE_Start.unity
     guid: c29db49d3b877e2488ee0e4246af7c65
   - enabled: 1
+    path: Assets/Scenes/SCE_ControlsScreen.unity
+    guid: efd151ee62946104196ceda0c5334748
+  - enabled: 1
     path: Assets/Scenes/SCE_Ferdi/TestLevel.unity
     guid: 1856ce7382ccac246a9437c8cc7fd318
   - enabled: 1

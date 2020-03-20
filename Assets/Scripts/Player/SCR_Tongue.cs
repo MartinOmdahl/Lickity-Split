@@ -380,11 +380,11 @@ public class SCR_Tongue : MonoBehaviour
 
             float heightDiff = targetJoint.transform.position.y - tongueTargetAnchor.position.y;
 
-            Vector3 swingVector = new Vector3(-playerInput.y * 6, playerInput.x * 6, 0);
+            Vector3 swingVector = new Vector3(-playerInput.y * 600 * Time.deltaTime, playerInput.x * 600 * Time.deltaTime, 0);
 
             targetJointRb.AddTorque((objectRefs.playerCamera.transform.right * swingVector.x) + (objectRefs.playerCamera.transform.forward * swingVector.y));
 
-            targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, 0, targetJointRb.angularVelocity.z);
+            //targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, 0, targetJointRb.angularVelocity.z);
 
             //targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, playerInput.x * 3, targetJointRb.angularVelocity.z);
 
