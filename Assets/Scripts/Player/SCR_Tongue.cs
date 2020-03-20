@@ -301,10 +301,12 @@ public class SCR_Tongue : MonoBehaviour
 
     IEnumerator TongueSwing(SCR_TongueTarget target)
     {
+        #region Initiate swing
         // Stop targeting
         currentTarget = null;
         tongueState = TongueState.Attached;
 
+        // Get references to joint
         ConfigurableJoint targetJoint = target.GetComponentInChildren<ConfigurableJoint>();
         Rigidbody targetJointRb = targetJoint.GetComponent<Rigidbody>();
 
@@ -340,6 +342,11 @@ public class SCR_Tongue : MonoBehaviour
         rb.constraints &= ~RigidbodyConstraints.FreezeRotationY;
         rb.constraints &= ~RigidbodyConstraints.FreezeRotationZ;
 
+        #endregion
+
+        #region During swing
+
+        // This part runs for the first part of swing. During this, player does not have free control.
         float swingTime = 0;
         while ((holdingTongueButton || swingTime < 0.2f) && target != null)
         {
@@ -352,10 +359,46 @@ public class SCR_Tongue : MonoBehaviour
             }
 
             tongueCollider.position = target.transform.position;
+
+            // Move on to next part of swing if time or distance swing is high enough
+            if(swingTime > 2f /*&& tongueTargetAnchor.position.y > targetJoint.transform.position.y*/)
+            {
+                break;
+            }
+
             yield return null;
         }
 
-        if(target != null)
+        targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, 0, 0);
+        targetJointRb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+
+        // This runs for the second part of swing. During this, player has free control.
+        while (holdingTongueButton && target != null)
+        {
+            Vector2 playerInput = controls.Player.Movement.ReadValue<Vector2>();
+            //targetJointRb.AddRelativeTorque(-playerInput.y * 4, playerInput.x * 4, 0, ForceMode.Acceleration);
+
+            float heightDiff = targetJoint.transform.position.y - tongueTargetAnchor.position.y;
+
+            Vector3 swingVector = new Vector3(-playerInput.y * 6, playerInput.x * 6, 0);
+
+            targetJointRb.AddTorque((objectRefs.playerCamera.transform.right * swingVector.x) + (objectRefs.playerCamera.transform.forward * swingVector.y));
+
+            targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, 0, targetJointRb.angularVelocity.z);
+
+            //targetJointRb.angularVelocity = new Vector3(targetJointRb.angularVelocity.x, playerInput.x * 3, targetJointRb.angularVelocity.z);
+
+            tongueCollider.position = target.transform.position;
+
+
+            yield return null;
+        }
+        targetJointRb.constraints = RigidbodyConstraints.FreezePosition;
+        #endregion
+
+        #region End swing
+
+        if (target != null)
         {
             // Break connection to joint
             targetJoint.connectedBody = null;
@@ -391,6 +434,8 @@ public class SCR_Tongue : MonoBehaviour
         movement.canMidairJump = true;
 
         StartCoroutine(TongueRetract(tongueCollider.transform.position, 1));
+
+        #endregion
     }
 
     IEnumerator TongueEat(SCR_TongueTarget target)
