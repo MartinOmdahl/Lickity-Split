@@ -413,7 +413,7 @@ Transform:
   m_LocalScale: {x: 0.18, y: 0.21262752, z: 0.18}
   m_Children: []
   m_Father: {fileID: 8864869857638280408}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8864869856705390330
 MeshFilter:
@@ -487,12 +487,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8864869856895184442}
-  m_LocalRotation: {x: -0.6532822, y: 0.6532803, z: 0.2705982, w: 0.27059898}
+  m_LocalRotation: {x: 0.0000000059898184, y: -0.0000000059915237, z: 0.70710576,
+    w: 0.7071078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6400001, y: 0.38356, z: 0.6400001}
+  m_LocalScale: {x: 0.80000013, y: 0.47945002, z: 0.8000001}
   m_Children: []
-  m_Father: {fileID: 8864869857638280408}
-  m_RootOrder: 1
+  m_Father: {fileID: 8864869857045090742}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
 --- !u!33 &8864869856895184447
 MeshFilter:
@@ -734,6 +735,7 @@ Transform:
   - {fileID: 8864869857494142468}
   - {fileID: 8864869856954065731}
   - {fileID: 8864869857550374288}
+  - {fileID: 8864869856895184445}
   m_Father: {fileID: 8864869856997211158}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -846,7 +848,7 @@ Transform:
   m_LocalScale: {x: 0.46177027, y: 0.46177033, z: 0.46177033}
   m_Children: []
   m_Father: {fileID: 8864869857638280408}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8864869857518871979
 MeshFilter:
@@ -1003,7 +1005,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8864869857657425101}
-  - {fileID: 8864869856895184445}
   - {fileID: 8864869857518871977}
   - {fileID: 8864869857851981536}
   - {fileID: 8864869856705390328}
@@ -1071,6 +1072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetType: 2
+  targetIconOffset: {x: 0, y: 0.4, z: 0}
   isBeingAttacked: 0
   canSwingFromGround: 0
   startWithVelocity: 1
@@ -1083,7 +1085,6 @@ MonoBehaviour:
   timeToPull: 0.5
   isBeingPulled: 0
   eventTriggered: 0
-  targetIconOffset: {x: 0, y: 0.4, z: 0}
 --- !u!1 &8864869857851981537
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,7 +1115,7 @@ Transform:
   m_LocalScale: {x: 0.14, y: 0.60000014, z: 0.14}
   m_Children: []
   m_Father: {fileID: 8864869857638280408}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8864869857851981538
 MeshFilter:

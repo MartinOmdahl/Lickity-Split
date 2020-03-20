@@ -149,7 +149,7 @@ public class SCR_CamControl : MonoBehaviour
         }
 
         // If obstruction is wide enough, move camera closer to player.
-        if (hitPointsDistance > 0.5f && hit)
+        if (hitPointsDistance > 0.25f && hit)
             targetDistance = Vector3.Distance(targetPosition, clipHit.point) - 0.5f;
 
         targetDistance = Mathf.Clamp(targetDistance, variables.camDistanceMinMax.x, variables.camDistanceMinMax.y);
