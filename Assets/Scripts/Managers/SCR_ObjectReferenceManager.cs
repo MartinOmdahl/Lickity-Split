@@ -30,7 +30,7 @@ public class SCR_ObjectReferenceManager : MonoBehaviour
 
     public GameObject player;
 
-    public CanvasGroup pauseMenu;
+    public SCR_PauseMenu pauseMenu;
     public CanvasGroup gameOverMenu;
 
     public SCR_TargetingIcon targetIcon;

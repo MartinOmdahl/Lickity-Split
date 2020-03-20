@@ -197,6 +197,8 @@ MonoBehaviour:
   musicVolume: 1
   levelAmbience: {fileID: 8300000, guid: 4e6c956185151994da0522bf2613f6a0, type: 3}
   ambienceVolume: 0.1
+  useKillY: 1
+  killY: -30
   musicSource: {fileID: 4634435323703258126}
   ambienceSource: {fileID: 4634435323413320640}
 --- !u!1 &4634435323413320642

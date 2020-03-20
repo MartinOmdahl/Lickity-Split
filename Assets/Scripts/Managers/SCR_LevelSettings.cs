@@ -10,6 +10,10 @@ public class SCR_LevelSettings : MonoBehaviour
     public float musicVolume = 1;
     public AudioClip levelAmbience;
     public float ambienceVolume = 1;
+    [Tooltip("Should player be killed if they go below a certain altitude?")]
+    public bool useKillY = true;
+    [Tooltip("If KillY is used, player will die at this altitude or below.")]
+    public float killY = -30;
 
     [Header("References")]
     public AudioSource musicSource;
@@ -30,7 +34,7 @@ public class SCR_LevelSettings : MonoBehaviour
         musicSource.Play();
         ambienceSource.clip = levelAmbience;
         ambienceSource.volume = ambienceVolume;
-        ambienceSource.Play();
+        ambienceSource  .Play();
     }
 
     void Update()

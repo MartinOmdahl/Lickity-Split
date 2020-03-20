@@ -39,6 +39,20 @@ public class SCR_PlayerSystem : MonoBehaviour
         {
             StartCoroutine(Die());
         }
+
+        if (objectRefs.levelSettings.useKillY)
+            CheckForKillY();
+    }
+
+    /// <summary>
+    /// Check if player is below KillY altitude and kill them if they are.
+    /// </summary>
+    void CheckForKillY()
+    {
+        if(transform.position.y < objectRefs.levelSettings.killY && !varManager.gameOver)
+        {
+            varManager.currentHealth = 0;
+        }
     }
 
     IEnumerator Die()
@@ -48,7 +62,7 @@ public class SCR_PlayerSystem : MonoBehaviour
         // Play animation
 
         // Wait until end of animation
-        yield return null;
+        yield return new WaitForSeconds(1.5f);
 
         //freeze time
         Time.timeScale = 0;

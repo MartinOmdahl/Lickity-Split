@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class SCR_GameOverMenu : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class SCR_GameOverMenu : MonoBehaviour
     SCR_ObjectReferenceManager objectRefs;
     SCR_VarManager varManager;
     EventSystem eventSystem;
+    Mouse mouse;
+
 
 
     void Start()
@@ -22,6 +25,8 @@ public class SCR_GameOverMenu : MonoBehaviour
         objectRefs = SCR_ObjectReferenceManager.Instance;
         varManager = SCR_VarManager.Instance;
         eventSystem = EventSystem.current;
+        mouse = Mouse.current;
+
 
         objectRefs.gameOverMenu = cGroup;
     }
@@ -31,11 +36,27 @@ public class SCR_GameOverMenu : MonoBehaviour
         if (varManager.gameOver && Time.timeScale == 0 && !cGroup.interactable)
             OpenGameOverMenu();
 
-        if (cGroup.interactable && eventSystem.currentSelectedGameObject != null)
+        if (cGroup.interactable)
+            MenuUpdate();
+    }
+
+    /// <summary>
+    /// An Update function that only runs when Game Over menu is open.
+    /// </summary>
+    void MenuUpdate()
+    {
+        // Move selector image to highlight current selected button
+        if (eventSystem.currentSelectedGameObject != null)
+            selectorImage.position = Vector3.Lerp(selectorImage.position, eventSystem.currentSelectedGameObject.transform.position, 50 * Time.unscaledDeltaTime);
+
+        // If mouse input received, unlock mouse control
+        if (mouse.wasUpdatedThisFrame)
         {
-            selectorImage.position = eventSystem.currentSelectedGameObject.transform.position;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
+
 
     public void OpenGameOverMenu()
     {

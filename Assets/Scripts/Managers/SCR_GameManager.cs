@@ -49,7 +49,12 @@ public class SCR_GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        // If Resume was pressed on pause menu, try to unpause game
+        if (objectRefs.pauseMenu.ResumePressed)
+        {
+            objectRefs.pauseMenu.ResumePressed = false;
+            PauseCheck();
+        }
     }
 
     void PauseCheck()
@@ -61,10 +66,8 @@ public class SCR_GameManager : MonoBehaviour
         {
             varManager.gamePaused = false;
 
-            // Remove pause HUD
-            objectRefs.pauseMenu.alpha = 0;
-            objectRefs.pauseMenu.interactable = false;
-            objectRefs.pauseMenu.blocksRaycasts = false;
+            // Deactivate pause menu
+            objectRefs.pauseMenu.ClosePauseMenu();
 
             // Unfreeze time
             Time.timeScale = 1;
@@ -78,10 +81,8 @@ public class SCR_GameManager : MonoBehaviour
         {
             varManager.gamePaused = true;
 
-            // Bring up pause hud
-            objectRefs.pauseMenu.alpha = 1;
-            objectRefs.pauseMenu.interactable = true;
-            objectRefs.pauseMenu.blocksRaycasts = true;
+            // Activate pause menu
+            objectRefs.pauseMenu.OpenPauseMenu();
 
             // Freeze time
             Time.timeScale = 0;
