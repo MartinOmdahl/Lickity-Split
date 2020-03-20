@@ -148,7 +148,7 @@ RectTransform:
   m_GameObject: {fileID: 34166330}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 9.051506, y: 4.6511, z: 4.6511}
+  m_LocalScale: {x: 9.051506, y: 4.857609, z: 4.6511}
   m_Children: []
   m_Father: {fileID: 1706059755}
   m_RootOrder: 1
@@ -607,7 +607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48, y: -212}
+  m_AnchoredPosition: {x: 2, y: -212}
   m_SizeDelta: {x: 790.1, y: 113.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &420116639
@@ -628,7 +628,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Takk til Dag-Erling Jensen, Steffen Fureli, Roland Kvam
+  m_text: Takk til Dag-Erling Jensen, Steffen Fureli og Roland Kvam
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -697,10 +697,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 420116639}
-    characterCount: 55
+    characterCount: 57
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 8
+    wordCount: 9
     linkCount: 0
     lineCount: 1
     pageCount: 1
