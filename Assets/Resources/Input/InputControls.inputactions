@@ -116,8 +116,30 @@
                 },
                 {
                     "name": "",
+                    "id": "0680f6c1-4a95-44ae-b893-cea610d2e8d2",
+                    "path": "<SwitchProControllerHID>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9f84b445-d6e2-446e-b712-728b0333e6cb",
                     "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c3a50f0-4cc5-4704-8dc1-5fe3050426d7",
+                    "path": "<SwitchProControllerHID>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -138,6 +160,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c7643f78-7498-4714-a162-61ec7a2d961d",
+                    "path": "<SwitchProControllerHID>/buttonEast",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Press to Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "12d31b8e-7941-43f3-91a6-a7778c07eee4",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "Press(behavior=2)",
@@ -149,8 +182,30 @@
                 },
                 {
                     "name": "",
+                    "id": "0467e61a-28cc-4071-ab73-00c2d8f4ea12",
+                    "path": "<SwitchProControllerHID>/buttonEast",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hold to Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "95fd0c94-4559-44dd-a6f5-652d14ba3e90",
                     "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "23b45f49-4b84-4583-8228-ca29a4cc2359",
+                    "path": "<SwitchProControllerHID>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -193,8 +248,30 @@
                 },
                 {
                     "name": "",
+                    "id": "264f2bd1-91a0-4227-b6cc-1a00d55db91d",
+                    "path": "<SwitchProControllerHID>/rightTrigger",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hold to Target (Press)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "e35e7431-16db-44fd-bf25-b5fe33c99fc3",
                     "path": "<Gamepad>/rightTrigger",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Hold to Target (Release)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "939ab01e-93fd-4fe1-9103-4a863cb0aa42",
+                    "path": "<SwitchProControllerHID>/rightTrigger",
                     "interactions": "Press(behavior=1)",
                     "processors": "",
                     "groups": "",
@@ -215,6 +292,17 @@
                 },
                 {
                     "name": "",
+                    "id": "1b0905a7-8c89-4944-9c55-2779b212baff",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tongue Button Press",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "bc8b6ce2-c35f-4a7b-8dff-40fe6e4365e0",
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "Press(behavior=1)",
@@ -226,8 +314,30 @@
                 },
                 {
                     "name": "",
+                    "id": "321c0371-18f5-4a91-8bf0-43a13aae05a7",
+                    "path": "<SwitchProControllerHID>/buttonWest",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tongue Button Release",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "28094fa8-94ce-48d3-a1f5-1d704b33cb18",
                     "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "61ea8bc2-70d7-4f28-85a0-20b3ff6f9619",
+                    "path": "<SwitchProControllerHID>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -250,6 +360,28 @@
                     "name": "",
                     "id": "882e7865-9430-44af-9890-f8ef0ec6ad19",
                     "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CenterCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "abfae58e-a855-40f4-b322-3326b4dba655",
+                    "path": "<SwitchProControllerHID>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CenterCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b649b018-f9ce-4d58-9ce0-0285916b9d36",
+                    "path": "<SwitchProControllerHID>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

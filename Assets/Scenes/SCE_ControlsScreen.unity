@@ -209,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xboxSprite: {fileID: 21300000, guid: 85f9a45ca18c6784caa93271e8b44609, type: 3}
   playStationSprite: {fileID: 21300000, guid: dfeebad5541b16b409ed56f9f8b3e5e8, type: 3}
+  switchSprite: {fileID: 21300000, guid: 85f9a45ca18c6784caa93271e8b44609, type: 3}
 --- !u!1 &950885601
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xboxSprite: {fileID: 21300000, guid: b40c1e837b7e2304a961922fd32e9a54, type: 3}
   playStationSprite: {fileID: 21300000, guid: 9cdbfd2ea276d8e468ccf9bc15189d0e, type: 3}
+  switchSprite: {fileID: 21300000, guid: 683a6716bfc138545b5a33cde574ec0f, type: 3}
 --- !u!114 &1347731304607954688
 MonoBehaviour:
   m_ObjectHideFlags: 0

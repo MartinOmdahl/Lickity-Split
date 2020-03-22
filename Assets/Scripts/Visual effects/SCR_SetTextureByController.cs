@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class SCR_SetTextureByController : MonoBehaviour
 {
     // Update to include Switch in future
-    public Texture xboxTexture, playStationTexture;
+    public Texture xboxTexture, playStationTexture, switchTexture;
 
     MeshRenderer meshRenderer;
     Gamepad gamepad;
@@ -22,11 +22,15 @@ public class SCR_SetTextureByController : MonoBehaviour
 
         if (gamepad != null)
         {
-            string gamepadType = gamepad.GetType().BaseType.ToString();
-            if (gamepadType == "UnityEngine.InputSystem.DualShock.DualShockGamepad")
+            if (gamepad.GetType().BaseType.ToString() == "UnityEngine.InputSystem.DualShock.DualShockGamepad")
             {
                 // If controller is PlayStation, set texture to PlayStation version
                 meshRenderer.material.mainTexture = playStationTexture;
+            }
+            else if (gamepad.GetType().ToString() == "UnityEngine.InputSystem.Switch.SwitchProControllerHID")
+            {
+                // If controller is Switch, set texture to Switch version
+                meshRenderer.material.mainTexture = switchTexture;
             }
             else
             {
