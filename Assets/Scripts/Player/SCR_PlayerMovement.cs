@@ -36,6 +36,7 @@ public class SCR_PlayerMovement : MonoBehaviour
     CapsuleCollider movementColl;
     ConstantForce gravity;
     SCR_VarManager varManager;
+    SCR_ControllerRumble rumble;
     #endregion
 
     #region Public variables
@@ -83,6 +84,7 @@ public class SCR_PlayerMovement : MonoBehaviour
 		controls = new InputControls();
 		rb = GetComponent<Rigidbody>();
         movementColl = GetComponent<CapsuleCollider>();
+        rumble = GetComponent<SCR_ControllerRumble>();
         gravity = externalVelocity.GetComponent<ConstantForce>();
 
 		//Functions:
@@ -346,6 +348,9 @@ public class SCR_PlayerMovement : MonoBehaviour
         // Play jump sound effect
         soundTriggers.PlayJumpSound();
 
+        // Play jump rumble
+        rumble.StartRumble(2, 0.06f, 0.01f, 0.2f);
+
         // Stop checking for ground collision for a few frames after jump
         overrideGroundDetect = true;
         touchingGround = false;
@@ -372,6 +377,8 @@ public class SCR_PlayerMovement : MonoBehaviour
         jumpCooldown = 0;
     }
 
+    // lets try this thing out, eh?
+
     /// <summary>
     /// Mid-air jump
     /// </summary>
@@ -393,6 +400,9 @@ public class SCR_PlayerMovement : MonoBehaviour
 
             // Play midair jump sound
             soundTriggers.PlayMidairJumpSound();
+
+            // Play midair jump rumble
+            rumble.StartRumble(2, 0.06f, 0.01f, 0.4f);
         }
         yield return null;
     }
@@ -439,6 +449,9 @@ public class SCR_PlayerMovement : MonoBehaviour
 
         // Set fall speed to zero
         externalVelocity.velocity = Vector3.zero;
+
+        // Play a short rumble
+        rumble.StartRumble(1, 0.05f, 0.05f, 0.02f);
 
         // Give player high friction physic material (possibly a terrible, terrible solution...)
         //movementColl.material = highFrictionMat;

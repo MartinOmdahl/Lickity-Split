@@ -9,11 +9,13 @@ public class SCR_PlayerSystem : MonoBehaviour
     [Tooltip("The joint Tongue Parent should follow")]
     public Transform tongueParentJoint;
 
+    SCR_ControllerRumble rumble;
     SCR_ObjectReferenceManager objectRefs;
     SCR_VarManager varManager;
 
     void Start()
     {
+        rumble = GetComponent<SCR_ControllerRumble>();
         varManager = SCR_VarManager.Instance;
         objectRefs = SCR_ObjectReferenceManager.Instance;
 
@@ -60,6 +62,9 @@ public class SCR_PlayerSystem : MonoBehaviour
         varManager.gameOver = true;
         // Disable player behavior
         // Play animation
+
+        // Play death rumble
+        rumble.StartRumble(10, 0.3f, 0.3f, 0.75f);
 
         // Wait until end of animation
         yield return new WaitForSeconds(1.5f);

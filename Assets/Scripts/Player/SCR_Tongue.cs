@@ -24,6 +24,7 @@ public class SCR_Tongue : MonoBehaviour
     InputControls controls;
     SCR_PlayerMovement movement;
     SCR_PlayerAnimation animScript;
+    SCR_ControllerRumble rumble;
     SCR_VarManager varManager;
     SCR_ObjectReferenceManager objectRefs;
     Rigidbody rb;
@@ -48,6 +49,7 @@ public class SCR_Tongue : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         movement = GetComponent<SCR_PlayerMovement>();
         animScript = GetComponentInChildren<SCR_PlayerAnimation>();
+        rumble = GetComponent<SCR_ControllerRumble>();
 
         tongueState = TongueState.Retracted;
 
@@ -317,6 +319,9 @@ public class SCR_Tongue : MonoBehaviour
 
         // [Activate swinging animation]
 
+        // Play Swing start rumble
+        rumble.StartRumble(2, 0.3f, 0.01f, 0.02f);
+
         // Tell target that player is swinging on it
         target.isBeingSwung = true;
 
@@ -489,6 +494,9 @@ public class SCR_Tongue : MonoBehaviour
             // [Play animation]
         }
 
+        // Play swallow rumble
+        rumble.StartRumble(3, 0.1f, 0.2f, 0.3f);
+
 
         // Destroy target
         if (target != null)
@@ -514,6 +522,9 @@ public class SCR_Tongue : MonoBehaviour
 
         // Set player's rotation back to where it was
         transform.rotation = playerStartingRotation;
+
+        // Play grab rumble
+        rumble.StartRumble(3, 0.15f, 0.1f, 0.1f);
 
         // get distance to grabbed object (this is used to determine if player is pulling on it)
         float maxTargetDistance = Vector3.Distance(tongueTargetAnchor.position, targetJoint.transform.position);
@@ -581,7 +592,10 @@ public class SCR_Tongue : MonoBehaviour
             // Jerk player backwards
             rb.AddRelativeForce(0, 0, -6, ForceMode.Impulse);
             movement.overrideNormalMovement = true;
-            
+
+            // Play release rumble
+            rumble.StartRumble(3, 0.2f, 0.3f, 0.2f);
+
             // Delay enabling normal movement
             yield return new WaitForSeconds(0.3f);
         }
